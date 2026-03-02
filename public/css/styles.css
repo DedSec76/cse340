@@ -1,6 +1,148 @@
+:root {
+  --skyblue-color: #01b0d3;
+  --skyblue-background: #01adcf;
+  --black-color: #020202;
+  --white-color: #fff;
+  --gray-light: #eee;
+  --blue-color: #0000ff;
+}
+
 /******* Change Box Model ***************/
 *,
 *:before,
 *:after {
   box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: var(--black-color);
+}
+
+ul {
+  list-style: none;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+/******* Header ***************/
+.main_header {
+  display: flex;
+  justify-content: space-between;
+  padding: .5rem 0;
+  margin: 1rem auto 2rem;
+}
+.siteName a {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/******* Navigation ***************/
+.main_nav {
+  background-color: var(--black-color);
+  padding: .2rem 0;
+}
+.main_nav ul {
+  display: flex;
+  justify-content: space-around;
+  padding: 0;
+}
+.main_nav li {
+  color: var(--gray-light);
+}
+
+/******* Hero Content ***************/
+.hero {
+  padding: .3rem 0;
+}
+.hero_tag {
+    position: relative;
+}
+.hero_tag img {
+  display: block;
+  width: 80%;
+  margin: auto;
+}
+
+.hero_description {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  width: 10rem;
+  background-color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  color: var(--skyblue-color);
+}
+
+.hero_description .title {
+  display: block;
+  font-size: 1.5em;
+  font-weight: bolder;
+  margin-bottom: .6rem;
+}
+
+.hero_description p {
+  line-height: 1.2;
+  margin: 0;
+}
+
+.hero_description a {
+  width: 100%;
+  display: block;
+  margin-top: 1rem;
+}
+
+.hero_description img {
+  width: 100%; 
+}
+
+/*******  ARTICLE DELOREAN DETAILS ***************/
+.details {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+/*******  SECTION DELOREAN REVIEW ***************/
+.reviews ul {
+  margin: 1rem 1.3rem;
+  list-style: disc;
+  padding: 0;
+}
+
+.reviews li {
+  margin-bottom: 1rem;
+}
+
+/*******  SECTION DELOREAN UDGRADES ***************/
+.container_upgrades {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+.container_upgrades figure {
+  margin: 0;
+  flex: 1 1 calc(50% - .5rem);
+  text-align: center;
+}
+.container_upgrades .background {
+  background-color: var(--skyblue-background);
+  border: 1px solid var(--black-color);
+  padding: .5rem 0;
+
+  width: 100%;
+  height: 90px;  
+}
+
+.container_upgrades a {
+  color: var(--blue-color);
+  text-decoration: underline;
+  text-align: center;
+}
+
+/*******  FOOTER ***************/
+.main_footer {
+  margin: 2rem 0;
 }
