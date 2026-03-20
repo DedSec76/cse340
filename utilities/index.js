@@ -8,7 +8,6 @@ Util.getNav = async function (req, res, next) {
     try {
         let data = await invModel.getClassifications()
         let list = "<ul>"
-        console.log(data)
         list += '<li><a href="/" title="Home page">Home</a></li>'
         data.rows.forEach(row => {
             list += "<li>"
@@ -30,7 +29,6 @@ Util.getNav = async function (req, res, next) {
         return "<ul><li>Error loading navigation</li></ul>"
     }
 }
-
 
 /* **************************************
 * Build the classification view HTML
@@ -65,5 +63,11 @@ Util.buildClassificationGrid = async function (data) {
     return grid
 }
 
+/* ****************************************
+ * Middleware For Handling Errors
+ * Wrap other function in this for 
+ * General Error Handling
+ **************************************** */
+Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
 
 module.exports = Util
