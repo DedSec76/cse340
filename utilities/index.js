@@ -47,11 +47,11 @@ Util.buildClassificationGrid = async function (data) {
             grid += '<div class="namePrice">'
             grid += '<hr />'
             grid += '<h2>'
-            grid += '<a href="../../inv/detail/' + vehicle.inv_id +'" title="View '
+            grid += '<a class="title_car" href="../../inv/detail/' + vehicle.inv_id +'" title="View '
             + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">'
             + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
             grid += '</h2>'
-            grid += '<span>$'
+            grid += '<span class="price_car">$'
             + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
             grid += '</div>'
             grid += '</li>'
@@ -63,11 +63,36 @@ Util.buildClassificationGrid = async function (data) {
     return grid
 }
 
+/* **************************************
+* Build the single view HTML
+* ************************************ */
+Util.buildVehicleCard = async function (data) {
+    return card = `<div class="card_vehicle">
+                        <img src="${data.inv_image}" alt="image of ${data.inv_make} ${data.inv_model} vehicle with details for sale"/>
+
+                        <div class="card_information">
+                            <h1 class="title_car">${data.inv_year} ${data.inv_make} ${data.inv_model}</h1>
+                            
+                            <ul class="vehicle_details">
+                                <li><strong>Make:</strong> ${data.inv_make}</li>
+                                <li><strong>Model:</strong> ${data.inv_model}</li>
+                                <li><strong>Miles:</strong> ${new Intl.NumberFormat('en-US').format(data.inv_miles)}</li>
+                                <li><strong>Color:</strong> ${data.inv_color}</li>
+                                <li class="price_car">$${new Intl.NumberFormat('en-US').format(data.inv_price)}</li>
+
+                            </ul>
+                            <p>${data.inv_description}</p>
+                        </div>
+                    </div>
+                    `
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
  * General Error Handling
  **************************************** */
-Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+Util.handleErrors = fn => (req, res, next) => 
+    Promise.resolve(fn(req, res, next)).catch(next)
 
 module.exports = Util

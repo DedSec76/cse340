@@ -1,10 +1,11 @@
 :root {
   --skyblue-color: #01b0d3;
-  --skyblue-background: #01adcf;
+  --skyblue-dark: #1a5965;
   --black-color: #020202;
   --white-color: #fff;
-  --gray-light: #eee;
+  --gray-light: #f2f2f2;
   --blue-color: #0000ff;
+  --green-price: #006000;
 }
 
 /******* Change Box Model ***************/
@@ -64,6 +65,7 @@ body {
 .hero_tag img {
   display: block;
   width: 80%;
+  max-width: 500px;
   margin: auto;
 }
 
@@ -129,7 +131,7 @@ body {
   text-align: center;
 }
 .container_upgrades .background {
-  background-color: var(--skyblue-background);
+  background-color: var(--skyblue-color);
   border: 1px solid var(--black-color);
   padding: .5rem 0;
 
@@ -148,6 +150,22 @@ body {
   margin: 2rem 0;
 }
 
+#test_error {
+  display: block;
+  text-decoration: underline;
+  color: var(--blue-color);
+  text-align: center;
+}
+
+/*******  Error Page ***************/
+.error_section {
+  text-align: center;
+}
+.error_image {
+  max-width: 500px;
+  margin: auto;
+}
+
 /*******  INVENTORY TYPE ***************/
 #inv-title {
   text-align: center;
@@ -162,10 +180,49 @@ body {
 #inv-display li {
   padding-bottom: 1rem;
   text-align: center;
-  background-color: #f2f2f2;
+  background-color: var(--gray-light);
   border-radius: 5px;
 }
-.namePrice span {
-  color: #006000;
+.price_car {
+  color: var(--green-price);
   font-size: 1.1rem;
+}
+.title_car {
+  color: var(--skyblue-dark);
+}
+
+/*******  Vehicle Details ***************/
+.card_vehicle {
+  background-color: var(--gray-light);
+  margin-top: 2rem;
+  padding: 1rem 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  
+}
+.card_vehicle img {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 500px;
+  max-height: fit-content;
+  box-shadow: 6px 6px 18px #2d2d2d46;
+}
+
+.card_information {
+  padding: .5rem;
+}
+.card_information h1 {
+  margin: 0 0 1rem;
+}
+
+.vehicle_details {
+  padding: 0;
+}
+.vehicle_details .price_car {
+  font-size: 1.5rem;
+}
+.vehicle_details li {
+  margin-bottom: 1rem;
 }
