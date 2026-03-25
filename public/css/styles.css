@@ -226,3 +226,11 @@ body {
 .vehicle_details li {
   margin-bottom: 1rem;
 }
+
+
+/* Styles for the messages */
+.notice {
+  color: red;
+  list-style: disc;
+  font-style: oblique;
+}
