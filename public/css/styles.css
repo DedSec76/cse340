@@ -227,6 +227,54 @@ body {
   margin-bottom: 1rem;
 }
 
+/*******  LOGIN VIEW ***************/
+.account_container {
+  max-width: 550px;
+  background-color: var(--skyblue-color);
+  margin: 0 auto;
+  padding: .5rem;
+  border-radius: 5px;
+}
+
+.account_form {
+  border-radius: 5px;
+  padding: .5rem;
+  border: 1px solid var(--gray-light);
+}
+.account_form label {font-size: 1.2rem;}
+.account_form input {
+  display: block;
+  margin-bottom: 1rem;
+  width: 100%;
+  padding: .4rem 0;
+  font-size: 1.1rem;
+}
+
+.account_container p {
+  text-align: center;
+  font-size: 1.2rem;
+}
+.account_container a {
+  text-decoration: underline;
+}
+
+#pswdBtn {
+  display: block;
+  background-color: var(--black-color);
+  color: var(--gray-light);
+  border-radius: 3rem;
+  padding: 1rem .5rem;
+  margin: 1rem 0;
+  font-size: 1.1rem;
+  cursor: pointer;
+  width: 10rem;
+}
+
+.btn_account {
+  padding: .4rem .6rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
 
 /* Styles for the messages */
 .notice {

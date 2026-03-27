@@ -14,8 +14,9 @@ const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
 const inventoryRoute = require("./routes/inventoryRoute")
-const utilities = require("./utilities/")
 const errorRoute = require("./routes/errorRoute")
+const utilities = require("./utilities/")
+
 
 /* ***********************
  * Middleware
@@ -37,6 +38,11 @@ app.use(function(req, res, next) {
   res.locals.messages = require('express-messages')(req, res)
   next()
 })
+
+// Express reads the data that 
+// comes in the body of a request
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 /* ***********************
  * View Engine and Templates
@@ -61,6 +67,9 @@ app.use("/inv", inventoryRoute)
 
 // Vehicle route
 app.use("/inv/detail", inventoryRoute)
+
+// Accounts route
+app.use("/account", require("./routes/accountRoute"))
 
 // Error route
 app.use("/errors", errorRoute)
