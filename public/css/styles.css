@@ -245,9 +245,22 @@ body {
 .account_form input {
   display: block;
   margin-bottom: 1rem;
-  width: 100%;
-  padding: .4rem 0;
+  width: 80%;
+  padding: .4rem .2rem;
   font-size: 1.1rem;
+  border-radius: 5px;
+  border: 1px solid gray;
+}
+
+.account_form input:focus { outline: none; }
+
+.account_form input:required:invalid,
+.account_form input:focus:invalid {
+  border-right: 10px solid red;
+}
+
+.account_form input:valid {
+  border-right: 10px solid var(--green-price);
 }
 
 .account_container p {
@@ -256,6 +269,15 @@ body {
 }
 .account_container a {
   text-decoration: underline;
+}
+
+#pswd_detail {
+  width: 80%;
+  display: block;
+  padding: .5rem 0 1rem;
+  font-style: italic;
+  color: #414141;
+  font-size: 1rem;
 }
 
 #pswdBtn {
