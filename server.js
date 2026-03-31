@@ -21,6 +21,15 @@ const utilities = require("./utilities/")
 /* ***********************
  * Middleware
  * ************************/
+// Block to .well-known
+app.use((req, res, next) => {
+  if (req.path.startsWith("/.well-known")) {
+    return res.status(204).end()
+  }
+  next()
+})
+
+
 app.use(session({
   store: new (require('connect-pg-simple')(session))({
     createTableIfMissing: true,
@@ -51,6 +60,8 @@ app.set("view engine", "ejs")
 app.use(expressLayouts)
 app.set("layout", "./layouts/layout")
 
+
+
 /* ***********************
  * Routes
  *************************/
@@ -64,9 +75,6 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 
 // Inventory routes
 app.use("/inv", inventoryRoute)
-
-// Vehicle route
-app.use("/inv/detail", inventoryRoute)
 
 // Accounts route
 app.use("/account", require("./routes/accountRoute"))
@@ -115,4 +123,5 @@ const host = process.env.HOST
 app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`)
 })
+
 

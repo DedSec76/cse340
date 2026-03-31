@@ -87,6 +87,39 @@ Util.buildVehicleCard = async function (data) {
                     `
 }
 
+/* ************************
+ * Build the list for the checkbox 
+ * in the classification list.
+ ************************** */
+Util.buildClassificationList = async function (classification_id = null) {
+    try {
+        let data = await invModel.getClassifications()
+        return classificationList = `
+                                    <select name="classification_id" id="classification_id" required>
+                                        <option selected value="" disabled>Choose a Classification</option>
+                                        
+                                        ${data.rows.map(item => 
+                                            `<option value="${item.classification_id}" ${isSelected(item)}>
+                                                ${item.classification_name}
+                                             </option>`
+                                        ).join("")}
+                                    </select>
+                                    `
+        
+        function isSelected(item) {
+            if (classification_id != null &&
+                classification_id == item.classification_id
+            ) {
+                return "selected"
+            }
+            return ""
+        }
+    } catch (error) {
+        console.error(error)
+        return "No data"
+    }
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 

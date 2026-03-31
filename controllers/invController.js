@@ -18,7 +18,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
     const grid = await utilities.buildClassificationGrid(data)
     let nav = await utilities.getNav()
     const className = data[0].classification_name
-    res.render("./inventory/classification", {
+    res.render("inventory/classification", {
         title: className + " vehicles",
         nav,
         grid,
@@ -43,11 +43,105 @@ invCont.buildByInvId = async function (req, res, next) {
     let nav = await utilities.getNav()
     const className = `${data.inv_make}  ${data.inv_model}`
     
-    res.render("./inventory/vehicle", {
+    res.render("inventory/vehicle", {
         title: className,
         nav,
         card
     })
+}
+
+/* ***************************
+ *  Build view for car management 
+ * ************************** */
+invCont.buildManagement = async function (req, res, next) {
+    let nav = await utilities.getNav()
+    
+    res.render("inventory/management", {
+        title: "Vehicle Management",
+        nav
+    })
+}
+
+/* ****************************************
+*  Deliver view to add new classification
+* *************************************** */
+invCont.buildNewClassification = async function (req, res, next) {
+    let nav = await utilities.getNav()
+    
+    res.render("inventory/addClassification", {
+        title: "Add Classification",
+        nav,
+        errors: null,
+        classification_name: ""
+    })
+}
+
+/* ****************************************
+*  Deliver view to add new vehicle
+* *************************************** */
+invCont.buildNewVehicle = async function (req, res, next) {
+    let nav = await utilities.getNav()
+    let list_classification = await utilities.buildClassificationList()
+
+    res.render("inventory/addVehicle", {
+        title: "Add New Vehicle",
+        nav,
+        errors: null,
+        list_classification
+    })
+}
+
+/* ***************************
+ *  View to Add new classification  
+ * ************************** */
+invCont.addNewClassification = async function (req, res) {
+    const { classification_name } = req.body
+    const addResult = await invModel.addNewClassification(classification_name)
+    
+    if(addResult) {
+        req.flash("notice", "The newcar classification was successfully added.")
+
+        return res.redirect("/inv/")
+    } else {
+        req.flash("notice", "Sorry, Error to Adding")
+        return res.redirect("/inv/new-classification")
+    }
+}
+
+/* ***************************
+ *  View to Add new vehicle  
+ * ************************** */
+invCont.addNewVehicle = async function (req, res) {
+    const { classification_id, 
+            inv_make, 
+            inv_model, 
+            inv_description, 
+            inv_image, 
+            inv_thumbnail, 
+            inv_price, 
+            inv_year, 
+            inv_miles, 
+            inv_color} = req.body
+    const addResult = await invModel.addNewVehicle({
+        classification_id,
+        inv_make,
+        inv_model,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_year,
+        inv_miles,
+        inv_color
+    })
+
+    if (addResult) {
+        req.flash("notice", "The new vehicle was successfully added.")
+        return res.redirect('/inv/')
+    } else {
+        req.flash("notice", "Sorry, Couldn't add the vehicle")
+        return res.redirect('/inv/new-vehicle')
+    }
 }
 
 module.exports = invCont

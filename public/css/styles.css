@@ -24,6 +24,11 @@ ul {
   list-style: none;
 }
 
+textarea {
+  font-family: "Roboto", sans-serif;
+  resize: none;
+}
+
 body {
   font-family: "Roboto", sans-serif;
 }
@@ -150,12 +155,17 @@ body {
   margin: 2rem 0;
 }
 
-#test_error {
+.standard_link,
+.standard_link a {
   display: block;
   text-decoration: underline;
   color: var(--blue-color);
-  text-align: center;
 }
+
+.standard_link li {
+  margin-bottom: 1rem;
+}
+
 
 /*******  Error Page ***************/
 .error_section {
@@ -242,7 +252,9 @@ body {
   border: 1px solid var(--gray-light);
 }
 .account_form label {font-size: 1.2rem;}
-.account_form input {
+.account_form input,
+.account_form textarea,
+.account_form select {
   display: block;
   margin-bottom: 1rem;
   width: 80%;
@@ -252,14 +264,18 @@ body {
   border: 1px solid gray;
 }
 
-.account_form input:focus { outline: none; }
+.account_form input:focus,
+.account_form textarea:focus { outline: none; }
 
 .account_form input:required:invalid,
-.account_form input:focus:invalid {
+.account_form input:focus:invalid,
+.account_form textarea:required:invalid,
+.account_form textarea:focus:invalid {
   border-right: 10px solid red;
 }
 
-.account_form input:valid {
+.account_form input:valid,
+.account_form textarea:valid {
   border-right: 10px solid var(--green-price);
 }
 
@@ -271,7 +287,7 @@ body {
   text-decoration: underline;
 }
 
-#pswd_detail {
+.advice {
   width: 80%;
   display: block;
   padding: .5rem 0 1rem;
