@@ -23,6 +23,11 @@ router.get("/new-classification", utilities.handleErrors(invController.buildNewC
 // Route to Add new vehicle
 router.get("/new-vehicle", utilities.handleErrors(invController.buildNewVehicle))
 
+// Route to Get Inventory
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+
+// Route to Update Inventory
+router.get("/edit/:inventory_id", utilities.handleErrors(invController.buildUpdateVehicle))
 
 
 /*  **********************************
@@ -42,6 +47,14 @@ router.post(
     invValidate.addVehicle(),
     invValidate.checkVehicle,
     utilities.handleErrors(invController.addNewVehicle)
+)
+
+// Route to update data in storage
+router.post(
+  "/edit",
+  invValidate.newInventoryRules(),
+  invValidate.checkUpdateData,
+  utilities.handleErrors(invController.updateVehicle)
 )
 
 

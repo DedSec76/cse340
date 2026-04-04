@@ -5,6 +5,7 @@
 /* ***********************
  * Require Statements
  *************************/
+const cookieParser = require("cookie-parser")
 const session = require("express-session")
 const pool = require('./database/')
 const baseController = require("./controllers/baseController")
@@ -29,7 +30,7 @@ app.use((req, res, next) => {
   next()
 })
 
-
+// Session
 app.use(session({
   store: new (require('connect-pg-simple')(session))({
     createTableIfMissing: true,
@@ -53,6 +54,12 @@ app.use(function(req, res, next) {
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+// CookieParser
+app.use(cookieParser())
+
+// Check JWT Token
+app.use(utilities.checkJWTToken)
+
 /* ***********************
  * View Engine and Templates
  *************************/
@@ -61,14 +68,10 @@ app.use(expressLayouts)
 app.set("layout", "./layouts/layout")
 
 
-
 /* ***********************
  * Routes
  *************************/
 app.use(static)
-app.use(express.static("public", {
-  maxAge: 0
-}))
 
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome))

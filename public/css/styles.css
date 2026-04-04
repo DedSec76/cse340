@@ -16,8 +16,8 @@
 }
 
 a {
-  text-decoration: none;
-  color: var(--black-color);
+  text-decoration: underline;
+  color: var(--blue-color);
 }
 
 ul {
@@ -40,6 +40,11 @@ body {
   padding: .5rem 0;
   margin: 1rem auto 2rem;
 }
+
+.main_header a {
+  color: var(--black-color);
+  text-decoration: none;
+}
 .siteName a {
   font-size: 2rem;
   font-weight: bold;
@@ -58,6 +63,7 @@ body {
 .main_nav li,
 .main_nav li a {
   color: var(--gray-light);
+  text-decoration: none;
 }
 
 /******* Hero Content ***************/
@@ -145,8 +151,6 @@ body {
 }
 
 .container_upgrades a {
-  color: var(--blue-color);
-  text-decoration: underline;
   text-align: center;
 }
 
@@ -199,6 +203,7 @@ body {
 }
 .title_car {
   color: var(--skyblue-dark);
+  text-decoration: none;
 }
 
 /*******  Vehicle Details ***************/
@@ -285,6 +290,7 @@ body {
 }
 .account_container a {
   text-decoration: underline;
+  color: var(--black-color);
 }
 
 .advice {
@@ -312,6 +318,70 @@ body {
   padding: .4rem .6rem;
   font-size: 1rem;
   cursor: pointer;
+}
+
+/* Vehicle Management Page */
+.manageInventory select {
+  width: 300px;
+  margin: auto;
+  font-size: 1rem;
+  padding: .5rem 0;
+}
+
+#inventoryDisplay {
+  min-width: 100px;
+  margin: auto;
+  margin-top: 1rem;
+  border-collapse: collapse;
+  background: #fff;
+  padding: .5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+#inventoryDisplay thead {
+  background: #0f172a;
+  color: white;
+}
+
+#inventoryDisplay th,
+#inventoryDisplay td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+#inventoryDisplay tbody tr {
+  border-bottom: 1px solid #b6b6b6;
+  transition: background 0.2s ease;
+}
+
+#inventoryDisplay tbody tr:hover {
+  background: #f5f5f5;
+}
+
+#inventoryDisplay a {
+  text-decoration: none;
+  font-weight: bold;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+#inventoryDisplay a[href*="edit"] {
+  background: #22c55e;
+  color: white;
+}
+
+#inventoryDisplay a[href*="edit"]:hover {
+  background: #188841;
+}
+
+#inventoryDisplay a[href*="delete"] {
+  background: #ef4444;
+  color: white;
+}
+
+#inventoryDisplay a[href*="delete"]:hover {
+  background: #a22e2e;
 }
 
 /* Styles for the messages */
