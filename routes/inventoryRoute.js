@@ -29,6 +29,8 @@ router.get("/getInventory/:classification_id", utilities.handleErrors(invControl
 // Route to Update Inventory
 router.get("/edit/:inventory_id", utilities.handleErrors(invController.buildUpdateVehicle))
 
+// Route to Delete Inventory
+router.get("/delete/:inventory_id", utilities.handleErrors(invController.buildDeleteVehicle))
 
 /*  **********************************
   *  ROUTES POST
@@ -49,12 +51,18 @@ router.post(
     utilities.handleErrors(invController.addNewVehicle)
 )
 
-// Route to update data in storage
+// Route to update stored vehicle
 router.post(
   "/edit",
   invValidate.newInventoryRules(),
   invValidate.checkUpdateData,
   utilities.handleErrors(invController.updateVehicle)
+)
+
+// Route to delete stored vehicle
+router.post(
+  "/delete",
+  utilities.handleErrors(invController.deleteVehicle)
 )
 
 

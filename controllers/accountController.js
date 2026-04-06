@@ -4,15 +4,28 @@ const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
 
+
 /* ****************************************
-*  Deliver home view
+*  Deliver Account home view
 * *************************************** */
 async function buildHome(req, res) {
     let nav = await utilities.getNav()
+    const token = req.cookies.jwt ||  req.signedCookies.jwt
+    
+    //console.log(res.locals.loggedin)
+    if(!token) {
+        res.locals.loggedin = 0
+        return next()
+    }
+    
+    const accountData = res.locals.accountData
+
     res.render("account/", {
-        title: "Home Account",
+        title: "Account Management",
         nav,
-        errors: null
+        errors: null,
+        account_firstname: accountData.account_firstname,
+        loggedin: res.locals.loggedin
     })
     
 }

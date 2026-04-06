@@ -1,2 +1,11 @@
-<%- messages() %>
-<h1>You're logged in</h1>
+<% if (title) { %>
+    <%- messages() %>
+    <h1><%= title %></h1>
+
+    <h2>Welcome <%= account_firstname %></h2>
+    <p>You're logged in.</p>
+
+    <a href="/account/update/">Edit Account Information</a>
+<% }  else {
+    return res.redirect('/account/login')
+}%>

@@ -122,6 +122,27 @@ invCont.buildUpdateVehicle = async function (req, res, next) {
 }
 
 /* ***************************
+ *  Deliver view to delete new vehicle
+ * ************************** */
+invCont.buildDeleteVehicle = async function (req, res) {
+    const inv_id = parseInt(req.params.inventory_id)
+    const invData = await invModel.getVehicleByInventoryId(inv_id)
+    
+    let nav = await utilities.getNav()
+
+    res.render("inventory/deleteVehicle-confirm", {
+        title: `Delete ${invData.inv_make} ${invData.inv_model}`,
+        nav,
+        errors: null,
+        inv_make: invData.inv_make,
+        inv_model: invData.inv_model,
+        inv_price: invData.inv_price,
+        inv_year: invData.inv_year,
+        inv_id
+    })
+}
+
+/* ***************************
  *  View to Add new classification  
  * ************************** */
 invCont.addNewClassification = async function (req, res) {
@@ -129,7 +150,7 @@ invCont.addNewClassification = async function (req, res) {
     const addResult = await invModel.addNewClassification(classification_name)
     
     if(addResult) {
-        req.flash("notice", "The newcar classification was successfully added.")
+        req.flash("notice", "The new car classification was successfully added.")
 
         return res.redirect("/inv/")
     } else {
@@ -139,7 +160,22 @@ invCont.addNewClassification = async function (req, res) {
 }
 
 /* ***************************
- *  View to Add new vehicle  
+ *  Return Inventory by Classification As JSON
+ * ************************** */
+invCont.getInventoryJSON = async function (req, res, next) {
+    const classification_id = parseInt(req.params.classification_id)
+    const invData = await invModel.getInventoryByClassificationId(classification_id)
+
+    if(invData[0].inv_id) {
+        return res.json(invData)
+    } else {
+        next(new Error("No data returned"))
+    }
+}
+
+/* ***************************
+ *  View to Add new vehicle
+ *  or return errors  
  * ************************** */
 invCont.addNewVehicle = async function (req, res) {
     const { classification_id, 
@@ -171,20 +207,6 @@ invCont.addNewVehicle = async function (req, res) {
     } else {
         req.flash("notice", "Sorry, Couldn't add the vehicle")
         return res.redirect('/inv/new-vehicle')
-    }
-}
-
-/* ***************************
- *  Return Inventory by Classification As JSON
- * ************************** */
-invCont.getInventoryJSON = async function (req, res, next) {
-    const classification_id = parseInt(req.params.classification_id)
-    const invData = await invModel.getInventoryByClassificationId(classification_id)
-
-    if(invData[0].inv_id) {
-        return res.json(invData)
-    } else {
-        next(new Error("No data returned"))
     }
 }
 
@@ -227,5 +249,21 @@ invCont.updateVehicle = async function (req, res) {
     }
 }
 
+/* ***************************
+ *  View to Delete vehicle
+ *  or return errors  
+ * ************************** */
+invCont.deleteVehicle = async function (req, res) {
+    const inv_id = parseInt(req.body.inv_id)
+    const deleteResult = await invModel.deleteVehicle(inv_id)
+
+    if(deleteResult) {
+        req.flash("notice", "The vehicle was successfully deleted.")
+        return res.redirect('/inv/')
+    } else {
+        req.flash("notice", "Sorry, The vehicle couldn't be deleted")
+        return res.redirect('/inv/delete/')
+    }
+}
 
 module.exports = invCont

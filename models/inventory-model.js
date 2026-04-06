@@ -4,7 +4,7 @@ const pool = require("../database/")
  *  Get all classification data
  * ************************** */
 async function getClassifications() {
-    return await pool.query("SELECT * FROM public.classification ORDER BY classification_name")
+    return await pool.query('SELECT * FROM public.classification ORDER BY classification_name')
 }
 
 /* ***************************
@@ -45,7 +45,7 @@ async function getVehicleByInventoryId(inv_id) {
  * ************************** */
 async function addNewClassification(classification_name) {
     try {
-        const sql = "INSERT INTO classification(classification_name) VALUES ($1) RETURNING *"
+        const sql = 'INSERT INTO classification(classification_name) VALUES ($1) RETURNING *'
         return await pool.query(sql, [classification_name])
     } catch (error) {
         console.error("Add New Classi Error" + error)
@@ -54,7 +54,7 @@ async function addNewClassification(classification_name) {
 
 async function checkNameExists(classification_name) {
     try {
-        const sql = "SELECT * FROM classification WHERE classification_name=$1"
+        const sql = 'SELECT * FROM classification WHERE classification_name=$1'
         const name = await pool.query(sql, [classification_name])
         return name.rowCount
     } catch (error) {
@@ -109,13 +109,28 @@ async function updateVehicle({inv_id,
     }
 }
 
+/* ***************************
+ *  Delete vehicle
+ * ************************** */
+async function deleteVehicle(inv_id) {
+    try {
+        const sql = 'DELETE FROM inventory WHERE inv_id = $1'
+        return await pool.query(sql, [inv_id])
+
+    } catch (error) {
+        console.error(error)
+        new Error("The vehicle couldn't delete")
+    }
+}
+
 module.exports = {getClassifications, 
                   getInventoryByClassificationId, 
                   getVehicleByInventoryId,
                   
                   addNewClassification,
                   checkNameExists,
+
                   addNewVehicle,
-                
-                  updateVehicle}
+                  updateVehicle,
+                  deleteVehicle}
 
