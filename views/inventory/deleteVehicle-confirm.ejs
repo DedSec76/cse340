@@ -1,0 +1,38 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+
+    <% if (errors) { %>
+        <ul class="notice">
+            <% errors.array().forEach(error => { %>
+                <li><%= error.msg %></li>
+            <% }) %>
+        </ul>
+    <% } %>
+
+    <section class="account_container">
+        <p>Confirm Deletion - The delete is permanent.</p>
+
+        <form id="deleteForm" class="account_form" action="/inv/delete" method="post">
+            <label for="make">Make</label>
+            <input type="text" id="make" name="inv_make" pattern="^[A-Za-zñÑ]+(\s[A-Za-zñÑ]+)*$" minlength="3" placeholder="Min of 3 characters" value="<%= locals.inv_make %>" required readonly>
+
+            <label for="model">Model</label>
+            <input type="text" id="model" name="inv_model" pattern="^[A-Za-zñÑ]+(\s[A-Za-zñÑ]+)*$" minlength="3" placeholder="Min of 3 characters" value="<%= locals.inv_model %>" required readonly>
+
+            <label for="price">Price</label>
+            <input type="number" step="0.01" id="price" name="inv_price" min="0" max="999999" placeholder="decimal or integer" value="<%= locals.inv_price %>" required readonly>
+
+            <label for="year">Year</label>
+            <input type="number" step="0.01" id="year" name="inv_year" min="1800" max="2050" placeholder="4-digits year" value="<%= locals.inv_year %>" required readonly>
+
+            <button class="btn_account" type="submit">Delete Vehicle</button>
+        
+            <input type="hidden" name="inv_id"
+            <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+            <% } %>>
+        </form>
+    </section>
+<% } else {
+    res.redirect('/inv')
+} %>
+
