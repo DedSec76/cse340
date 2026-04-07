@@ -17,7 +17,7 @@ const static = require("./routes/static")
 const inventoryRoute = require("./routes/inventoryRoute")
 const errorRoute = require("./routes/errorRoute")
 const utilities = require("./utilities/")
-
+const modelAccount = require("./models/account-model")
 
 /* ***********************
  * Middleware
@@ -57,8 +57,11 @@ app.use(express.urlencoded({ extended: true }))
 // CookieParser
 app.use(cookieParser())
 
+// Check Authentication
+app.use(utilities.checkAuth)
+
 // Check JWT Token
-app.use(utilities.checkJWTToken)
+//app.use(utilities.checkJWTToken)
 
 /* ***********************
  * View Engine and Templates
@@ -94,9 +97,9 @@ app.use(async (req, res, next) => {
 * Express Error Handler
 * Place after all other middleware
 *************************/
-app.use(async (err, req, res, next) => {
+app.use(async (err, req, res, next) => { 
   let nav = await utilities.getNav()
-  let message
+  let message;
 
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
   
@@ -109,7 +112,7 @@ app.use(async (err, req, res, next) => {
   res.status(err.status || 500).render("errors/error", {
       title: err.status || 'Server Error',
       message,
-      nav
+      nav: nav || 'Items not found'
     })
 })
 

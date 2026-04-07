@@ -242,7 +242,7 @@ invCont.updateVehicle = async function (req, res) {
 
     if (updateResult) {
         req.flash("notice", "The vehicle was successfully updated.")
-        res.redirect('/inv/')
+        return res.redirect('/inv/')
     } else {
         req.flash("notice", "Sorry, The vehicle couldn't be updated.")
         return res.redirect('/inv/edit/')

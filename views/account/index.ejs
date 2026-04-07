@@ -5,7 +5,13 @@
     <h2>Welcome <%= account_firstname %></h2>
     <p>You're logged in.</p>
 
-    <a href="/account/update/">Edit Account Information</a>
+    <a href="/account/update/<%= account_id %>">Edit Account Information</a>
+
+    <% if(account_type == 'Employee' ||
+          account_type == 'Admin') { %>
+        <h2>Inventory Management</h2>
+        <a href="/inv/">Management Inventory</a>
+    <% } %>
 <% }  else {
     return res.redirect('/account/login')
 }%>

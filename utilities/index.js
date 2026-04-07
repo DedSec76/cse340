@@ -140,7 +140,7 @@ Util.checkJWTToken = (req, res, next) => {
             process.env.ACCESS_TOKEN_SECRET,
             function (err, accountData) {
                 if(err) {
-                    req.flash("Please log in")
+                    req.flash("Please log in from checkToken")
                     res.clearCookie("jwt")
                     return res.redirect("/account/login")
                 }
@@ -149,6 +149,7 @@ Util.checkJWTToken = (req, res, next) => {
                 next()
         })
     } else {
+        res.locals.loggedin = 0
         next()
     }
 }
@@ -157,12 +158,61 @@ Util.checkJWTToken = (req, res, next) => {
  *  Check Login
  * ************************************ */
 Util.checkLogin = (req, res, next) => {
-    if(res.locals.loggedin) {
+    if(res.locals.loggedin === 1) {
         next()
     } else {
         req.flash("notice", "Please log in.")
         return res.redirect("/account/login")
     }
 }
+
+Util.isAdministrative = (req, res, next) => {
+    const account_type = res.locals.accountData.account_type
+
+    if(account_type == "Employee" ||
+        account_type == "Admin"
+    ) {
+        next()
+    } else {
+        req.flash("notice", "Restricted area. Your current account doesn't have privileges.")
+        return res.redirect("/account/login")
+    }
+}
+
+/* ****************************************
+ *  To Know if it is authenticated
+ * ************************************ */
+Util.checkAuth = (req, res, next) => {
+    const token = req.cookies.jwt
+
+    if(!token) {
+        res.locals.loggedin = 0
+        return next();
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+        res.locals.loggedin = 1
+        res.locals.accountData = decoded
+    } catch (error) {
+        res.locals.loggedin = 0
+        res.locals.accountData = null
+    }
+    next()
+}
+
+/* ****************************************
+ *  Logout
+ * ************************************ */
+Util.logout = (req, res, next) => {
+    if(req.cookies.jwt) {
+        res.clearCookie("jwt")
+        //res.redirect("/")
+        return res.redirect("/")
+    } else {
+        next()
+    }
+}
+
 
 module.exports = Util
