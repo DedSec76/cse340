@@ -45,9 +45,9 @@ router.post(
 // Process for updating account data
 router.post(
     "/update",
+    utilities.checkLogin,
     regValidate.updateAccountRules(),
     regValidate.checkUpdateData,
-    utilities.checkLogin,
     utilities.handleErrors(accountController.updateAccount)
 )
 
