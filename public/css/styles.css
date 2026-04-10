@@ -250,6 +250,39 @@ body {
   margin-bottom: 1rem;
 }
 
+/* Reviews Container */
+.list_reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 1rem 0;
+  list-style: disc;
+}
+.list_reviews li,
+.list_reviews p {
+  margin: 0;
+}
+.list_reviews hr {
+  border: 1.5px solid var(--black-color);
+  margin: 5px 0;
+  max-width: 700px;
+}
+.review_text {
+  max-width: 690px;
+}
+
+.list_empty {
+  background-color: yellow;
+  font-size: 1.1rem;
+}
+
+.section_review .account_form input {
+  max-width: 300px;
+}
+.section_review .account_form textarea {
+  max-width: 500px;
+}
+
 /*******  LOGIN VIEW ***************/
 .account_container {
   max-width: 550px;
@@ -401,8 +434,19 @@ body {
 }
 
 /* Styles for the messages */
-.notice {
-  color: red;
+#messages {
+  padding: 0 16px;
+  margin: 0;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+/* ERROR */
+#messages .error,
+#messages .notice {
+  background-color: #ffe5e5;
+  color: #b30000;
+  border-left: 5px solid #ff4d4d;
   list-style: disc;
   font-style: oblique;
 }

@@ -1,7 +1,54 @@
 <% if (title) { %>
+    <%- messages() %>
+
     <%- card %>
-<% } else { 
-    res.redirect('/')
-} %>
+
+    <h2>Customer Reviews</h2>
+
+    <% if(reviews && reviews.length > 0) { %>
+        <ul class="list_reviews">
+            <%  reviews.forEach(review => { %>
+                <li><p><strong><%= review.screen_name || 'Anonymous' %>
+                       </strong> wrote on <%= new Date(review.review_date).toLocaleString('en-US', {
+                    day: '2-digit',
+                    month:'long',
+                    year: 'numeric'
+                }) %></p>
+                    <hr>
+                    <p class="review_text"><%= review.review_text %></p>
+                </li>
+            <%  }) %>
+        </ul>
+    <% } else { %> 
+        <p class="list_empty">Be the first to write a review.</p>
+    <% } %>
+
+    <% if(loggedin) { %>
+        <h3>Add Your own Review</h3>
+
+        <% if (errors) { %>
+            <ul class="notice">
+                <% errors.array().forEach(error => { %>
+                    <li><%= error.msg %></li>
+                <% }) %>
+            </ul>    
+        <% } %>
+        <section class="section_review">
+            <form class="account_form" action="/reviews/create" method="post">
+                <label for="reviewName">Screen Name:</label>
+                <input type="text" id="reviewName" value="<%= screen_name || '' %>" disabled>
+
+                <label for="reviewMessage">Review:</label>
+                <textarea id="reviewMessage" name="review_text" required placeholder="Write your review min 5 characters"></textarea>
+                
+                <input type="hidden" name="inv_id" value="<%= inv_id %>">
+
+                <button class="btn_account">Submit Review</button>
+            </form>
+        </section>
+    <% } else { %>
+        <p>You must <a href="/account/login">login</a> to write a review.</p>
+    <% } 
+} %> 
  
 

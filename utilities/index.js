@@ -200,6 +200,21 @@ Util.checkAuth = (req, res, next) => {
     }
     next()
 }
+/* ****************************************
+ *  Function to build screen name
+ * ************************************ */
+Util.buildScreenname = (data) => {
+    if (!data) return ''
+
+    const { account_firstname, account_lastname } = data
+
+    if(account_firstname && account_lastname) {
+        return account_firstname.charAt(0) + account_lastname
+    }
+
+    return 'Anonymous'
+}
+
 
 /* ****************************************
  *  Logout

@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const revModel = require("../models/review-model")
 const utilities = require("../utilities/")
 
 const invCont = {}
@@ -29,25 +30,47 @@ invCont.buildByClassificationId = async function (req, res, next) {
  *  Build view by each car
  * ************************** */
 invCont.buildByInvId = async function (req, res, next) {
-    const inventory_id = req.params.invId
-    const data = await invModel.getVehicleByInventoryId(inventory_id)
+    try {
+        const inventory_id = req.params.invId
 
-    // Data Validation
-    if( !data || data.length === 0) {
-        const error = new Error("Vehicle not found")
-        error.status = 404
-        throw error
+        const data = await invModel.getVehicleByInventoryId(inventory_id)
+        const reviews = await revModel.getReviewByInventory(inventory_id)
+        
+        // Data Validation
+        if(!data) {
+            const error = new Error("Vehicle not found")
+            error.status = 404
+            throw error
+        }
+        
+        const { inv_make, inv_model } = data
+        const className = `${inv_make} ${inv_model}`
+
+        const nav = await utilities.getNav()
+        const card = await utilities.buildVehicleCard(data)
+        
+        reviews.forEach(r => {
+            r.screen_name = utilities.buildScreenname(r)
+        })
+
+        const accountData = res.locals.accountData || null
+        const screen_name = utilities.buildScreenname(accountData)
+
+        res.render("inventory/vehicle", {
+            title: className,
+            nav,
+            card,
+            errors: null,
+            reviews,
+            loggedin: res.locals.loggedin,
+            screen_name: screen_name,
+            inv_id: inventory_id
+        })
+
+    } catch (error) {
+        console.error(error)
+        next(error)
     }
-
-    const card = await utilities.buildVehicleCard(data)
-    let nav = await utilities.getNav()
-    const className = `${data.inv_make}  ${data.inv_model}`
-    
-    res.render("inventory/vehicle", {
-        title: className,
-        nav,
-        card
-    })
 }
 
 /* ***************************

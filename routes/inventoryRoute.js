@@ -91,6 +91,5 @@ router.post(
   utilities.handleErrors(invController.deleteVehicle)
 )
 
-
 module.exports = router
 

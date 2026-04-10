@@ -17,7 +17,7 @@ const static = require("./routes/static")
 const inventoryRoute = require("./routes/inventoryRoute")
 const errorRoute = require("./routes/errorRoute")
 const utilities = require("./utilities/")
-const modelAccount = require("./models/account-model")
+const reviewRoute = require("./routes/reviewRoutes")
 
 /* ***********************
  * Middleware
@@ -81,6 +81,9 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 
 // Inventory routes
 app.use("/inv", inventoryRoute)
+
+// Reviews routes
+app.use("/reviews", reviewRoute)
 
 // Accounts route
 app.use("/account", require("./routes/accountRoute"))
