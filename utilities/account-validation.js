@@ -133,12 +133,14 @@ validate.updatePasswordRules = () => {
  * Check data and return errors or continue to registration
  * ***************************** */
 validate.checkRegData = async (req, res, next) => {
-    const { account_firstname, account_lastname, account_email } = req.body
-    let errors = []
-    errors = validationResult(req)
+    let errors = validationResult(req)
+
     if (!errors.isEmpty()) {
         let nav = await utilities.getNav()
-        res.render("account/register", {
+
+        const { account_firstname, account_lastname, account_email } = req.body
+
+        return res.render("account/register", {
             errors,
             title: "Registration",
             nav,
@@ -146,7 +148,6 @@ validate.checkRegData = async (req, res, next) => {
             account_lastname,
             account_email
         })
-        return
     }
     next()
 }
@@ -155,30 +156,32 @@ validate.checkRegData = async (req, res, next) => {
  * Check data and return errors or continue to log in
  * ***************************** */
 validate.checkLogData = async (req, res, next) => {
-    const { account_email } = req.body
-    let errors = validationResult(req)
+    const errors = validationResult(req)
+
     if (!errors.isEmpty()) {
         let nav = await utilities.getNav()
-        res.render("account/login", {
+
+        const { account_email } = req.body
+
+        return res.render("account/login", {
             errors,
             title: "Login",
             nav,
             account_email,
         })
-        return
     }
     next()
 }
 
 validate.checkUpdateData = async (req, res, next) => {
-    const { account_firstname, account_lastname, account_email, account_id } = req.body
-    
     const errors = validationResult(req)
 
     if(!errors.isEmpty()) {
         let nav = await utilities.getNav()
 
-        res.render("account/edit", {
+        const { account_firstname, account_lastname, account_email, account_id } = req.body
+
+        return res.render("account/edit", {
             title: "Edit Account",
             nav,
             errors,
@@ -187,7 +190,6 @@ validate.checkUpdateData = async (req, res, next) => {
             account_email,
             account_id
         })
-        return
     }
     next()
 }
@@ -198,12 +200,11 @@ validate.checkUpdatePassword = async (req, res, next) => {
     if(!errors.isEmpty()) {
         let nav = await utilities.getNav()
 
-        res.render("/account/edit", {
+        return res.render("/account/edit", {
             title: "Edit Account",
             nav,
             errors
         })
-        return
     }
     next()
 }

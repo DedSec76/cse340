@@ -160,19 +160,19 @@ validate.newInventoryRules = () => {
  * add the classification 
  * ***************************** */
 validate.checkClassification = async (req, res, next) => {
-    const { classification_name } = req.body
     const errors = validationResult(req)
     
     if(!errors.isEmpty()) {
         let nav = await utilities.getNav()
 
-        res.render("inventory/addClassification", {
+        const { classification_name } = req.body
+
+        return res.render("inventory/addClassification", {
             errors,
             title: "Add New Classification",
             nav,
             classification_name
         })
-        return
     }
     next()
 }
@@ -181,7 +181,13 @@ validate.checkClassification = async (req, res, next) => {
  * add the vehicle 
  * ***************************** */
 validate.checkVehicle = async (req, res, next) => {
-    const { classification_id, 
+    const errors = validationResult(req)
+
+    if(!errors.isEmpty()) {
+        let nav = await utilities.getNav()
+        let list_classification = await utilities.buildClassificationList(classification_id)
+
+        const { classification_id, 
             inv_make, 
             inv_model, 
             inv_description, 
@@ -191,13 +197,8 @@ validate.checkVehicle = async (req, res, next) => {
             inv_year, 
             inv_miles, 
             inv_color } = req.body
-    const errors = validationResult(req)
 
-    if(!errors.isEmpty()) {
-        let nav = await utilities.getNav()
-        let list_classification = await utilities.buildClassificationList(classification_id)
-
-        res.render("inventory/addVehicle", {
+        return res.render("inventory/addVehicle", {
             title: "Add New Vehicle",
             nav,
             errors,
@@ -213,7 +214,6 @@ validate.checkVehicle = async (req, res, next) => {
             inv_miles, 
             inv_color
         })
-        return
     }
     next()
 }
@@ -223,7 +223,13 @@ validate.checkVehicle = async (req, res, next) => {
  * update the vehicle 
  * ***************************** */
 validate.checkUpdateData = async (req, res, next) => {
-    const { classification_id,
+    const errors = validationResult(req)
+
+    if(!errors.isEmpty()) {
+        let nav = await utilities.getNav()
+        let list_classification = await utilities.buildClassificationList(classification_id)
+
+        const { classification_id,
             inv_id, 
             inv_make, 
             inv_model, 
@@ -235,13 +241,7 @@ validate.checkUpdateData = async (req, res, next) => {
             inv_miles, 
             inv_color } = req.body
 
-    const errors = validationResult(req)
-
-    if(!errors.isEmpty()) {
-        let nav = await utilities.getNav()
-        let list_classification = await utilities.buildClassificationList(classification_id)
-
-        res.render("inventory/editVehicle", {
+        return res.render("inventory/editVehicle", {
             title: `Edit ${inv_make} ${inv_model}`,
             nav,
             errors,
@@ -258,7 +258,6 @@ validate.checkUpdateData = async (req, res, next) => {
             inv_miles, 
             inv_color
         })
-        return
     }
     next()
 }

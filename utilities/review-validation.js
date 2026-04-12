@@ -15,32 +15,34 @@ validate.addReviewRules = () => {
 
 validate.checkAddReview = async(req, res, next) => {
     try {
-        const { inv_id } = req.body
-        
-        const data = await invModel.getVehicleByInventoryId(inv_id)
-        if (!data) {
-            req.flash("error", "Vehicle not found. Couldn't added review.")
-            return res.redirect('/')
-        }
-
-        const reviews = await revModel.getReviewByInventory(inv_id)
-
-        const { inv_make, inv_model } = data
-        const className = `${inv_make} ${inv_model}`
-
-        const card = await utilities.buildVehicleCard(data)
-        const nav = await utilities.getNav()
         const errors = validationResult(req)
 
-        reviews.forEach(r => {
-            r.screen_name = utilities.buildScreenname(r)
-            r.review_date = utilities.formatDate(r.review_date)
-        });
-
-        const accountData = res.locals.accountData || null
-        const screen_name = utilities.buildScreenname(accountData)
-
         if (!errors.isEmpty()) {
+            const { inv_id } = req.body
+        
+            const data = await invModel.getVehicleByInventoryId(inv_id)
+
+            if (!data) {
+                req.flash("error", "Vehicle not found. Couldn't added review.")
+                return res.redirect('/')
+            }
+
+            const reviews = await revModel.getReviewByInventory(inv_id)
+
+            const { inv_make, inv_model } = data
+            const className = `${inv_make} ${inv_model}`
+
+            const card = await utilities.buildVehicleCard(data)
+            const nav = await utilities.getNav()
+            
+            reviews.forEach(r => {
+                r.screen_name = utilities.buildScreenname(r)
+                r.review_date = utilities.formatDate(r.review_date)
+            });
+
+            const accountData = res.locals.accountData || null
+            const screen_name = utilities.buildScreenname(accountData)
+
             return res.render("inventory/vehicle", {
                 title: className,
                 nav,
@@ -61,17 +63,18 @@ validate.checkAddReview = async(req, res, next) => {
 
 validate.checkUpdateReview = async(req, res, next) => {
     try {
-        const nav = await utilities.getNav()
-
-        const { review_text, review_id } = req.body
-
-        const review = await revModel.getReviewById(review_id)
-        const { review_date, inv_make, inv_model, inv_year } = review
-        
-        const newDate = utilities.formatDate(review_date)
         const errors = validationResult(req)
 
         if (!errors.isEmpty()) {
+            const nav = await utilities.getNav()
+
+            const { review_text, review_id } = req.body
+
+            const review = await revModel.getReviewById(review_id)
+            const { review_date, inv_make, inv_model, inv_year } = review
+            
+            const newDate = utilities.formatDate(review_date)
+
             return res.render("review/edit", {
                 title: `Edit ${inv_year} ${inv_make} ${inv_model} Review`,
                 nav,

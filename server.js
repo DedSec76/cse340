@@ -70,7 +70,6 @@ app.set("view engine", "ejs")
 app.use(expressLayouts)
 app.set("layout", "./layouts/layout")
 
-
 /* ***********************
  * Routes
  *************************/
