@@ -1,0 +1,28 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+
+    <% if (errors) { %>
+        <ul class="notices">
+            <% errors.array().forEach(error => { %>
+                <li><%= error.msg %></li>
+            <% }) %>
+        </ul>
+    <% } %>
+
+    <section class="account_container">
+        <p>Confirm Correct Item! Deletion cannot be undone.</p>
+
+        <form id="deleteForm" class="account_form" action="/reviews/delete" method="post">
+            <label for="reviewDate">Review Date</label>
+            <input type="text" id="reviewDate" name="review_date" value="<%= newDate %>" disabled>
+
+            <label for="reviewText">Review Text</label>
+            <textarea id="reviewText" name="review_text" minlength="5" disabled><%= review_text %></textarea>
+
+            <button class="btn_account" type="submit">Delete</button>
+            
+            <input type="hidden" name="review_id" value="<%= review_id %>">
+        </form>
+    </section>
+
+<% } %>
