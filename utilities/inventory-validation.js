@@ -12,7 +12,7 @@ validate.addClassification = () => {
         // classification_name is required and must be string
         body("classification_name")
             .trim()
-            .notEmpty()
+            .notEmpty().withMessage("Your name is required").bail()
             .matches(/^\S+$/)
             .isAlpha()
             .withMessage("The name must be alphabetical and without spaces")

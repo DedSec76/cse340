@@ -22,9 +22,11 @@ router.get("/update/:account_id",
     utilities.handleErrors(accountController.buildUpdateAccount))
 
 // Route to logout user
-router.get("/logout", utilities.logout)
+router.get("/logout",
+    utilities.checkLogin, 
+    utilities.logout)
 
-
+// ROUTES POST
 
 // Process the registration data
 router.post(

@@ -38,7 +38,7 @@ validate.registrationRules = () => {
         // password is required and must be strong password
         body("account_password")
             .trim()
-            .notEmpty().withMessage("Password is required.")
+            .notEmpty().withMessage("Password is required.").bail()
             .isStrongPassword({
                 minLength: 12,
                 minLowercase: 1,
@@ -68,7 +68,7 @@ validate.registrationRules = () => {
             }),
         body("account_password")
             .trim()
-            .notEmpty()
+            .notEmpty().withMessage("Password is required").bail()
             .isStrongPassword({
                 minLength: 12,
                 minLowercase: 1,
@@ -117,7 +117,7 @@ validate.updatePasswordRules = () => {
         // password is required and must be strong password
         body("account_password")
             .trim()
-            .notEmpty().withMessage("Password is required.")
+            .notEmpty().withMessage("Password is required.").bail()
             .isStrongPassword({
                 minLength: 12,
                 minLowercase: 1,

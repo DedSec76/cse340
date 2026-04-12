@@ -15,6 +15,7 @@ async function getReviewById(review_id) {
     }
     
 }
+
 async function getReviewByInventory(inv_id) {
     try {
         const data = await pool.query(`SELECT r.review_id, r.review_text, r.review_date, r.inv_id, r.account_id, a.account_firstname, a.account_lastname
@@ -38,7 +39,8 @@ async function getReviewByAccountId(account_id) {
                                         FROM review AS r
                                         JOIN inventory AS i
                                         ON r.inv_id = i.inv_id
-                                        WHERE r.account_id = $1`, 
+                                        WHERE r.account_id = $1
+                                        ORDER BY r.review_date DESC`, 
                     [account_id])
         return data.rows
     } catch (error) {

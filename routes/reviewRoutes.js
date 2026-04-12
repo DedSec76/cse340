@@ -6,21 +6,23 @@ const utilities = require("../utilities/")
 const reviewValidate = require('../utilities/review-validation')
 
 /*  **********************************
-  *  REVIEW ROUTES 
+  *  REVIEW GET ROUTES 
   * ********************************* */
 
-// Get Reviews
-//router.get("/detail/:invId", utilities.handleErrors(revController.buildReview))
+// View Edit
 router.get("/edit/:reviewId",
     utilities.checkLogin,
     utilities.handleErrors(revController.buildViewUpdate))
 
+// View Delete
 router.get("/delete/:reviewId",
     utilities.checkLogin,
     utilities.handleErrors(revController.buildViewDelete))
 
 
-// Post Reviews
+/*  **********************************
+*  REVIEW POST ROUTES 
+* ********************************* */
 // Create
 router.post("/create",
     utilities.checkLogin,
@@ -36,10 +38,8 @@ router.post("/edit",
     utilities.handleErrors(revController.updateReview))
 
 // Delete
-router.post("/delete",
+router.post("/delete/",
     utilities.checkLogin,
-    reviewValidate.addReviewRules(),
-    //reviewValidate.checkDeleteReview,
     utilities.handleErrors(revController.deleteReview))
 
 

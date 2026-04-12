@@ -2,7 +2,7 @@
     <h1><%= title %></h1>
 
     <% if (errors) { %>
-        <ul class="notice">
+        <ul class="notices">
             <% errors.array().forEach(error => { %>
                 <li><%= error.msg %></li>
             <% }) %>
@@ -17,7 +17,7 @@
             <input type="text" id="reviewDate" name="review_date" value="<%= newDate %>" disabled>
 
             <label for="reviewText">Review Text</label>
-            <textarea id="reviewText" name="review_text" minlength="5" required><%= review_text %></textarea>
+            <textarea id="reviewText" name="review_text" minlength="10" required><%= review_text %></textarea>
 
             <button class="btn_account" type="submit">Update</button>
             

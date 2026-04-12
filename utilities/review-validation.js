@@ -9,7 +9,7 @@ validate.addReviewRules = () => {
         body("review_text")
             .trim()
             .notEmpty().withMessage("The description must not be empty").bail()
-            .isLength({ min: 5, max: 800 }).withMessage("Description min 5 chars and max 800 characters"),
+            .isLength({ min: 10, max: 800 }).withMessage("Description min 10 chars and max 800 characters"),
     ]
 }
 
@@ -34,6 +34,7 @@ validate.checkAddReview = async(req, res, next) => {
 
         reviews.forEach(r => {
             r.screen_name = utilities.buildScreenname(r)
+            r.review_date = utilities.formatDate(r.review_date)
         });
 
         const accountData = res.locals.accountData || null

@@ -167,13 +167,6 @@ body {
   margin: 2rem 0;
 }
 
-.standard_link,
-.standard_link a {
-  display: block;
-  text-decoration: underline;
-  color: var(--blue-color);
-}
-
 .standard_link li {
   margin-bottom: 1rem;
 }

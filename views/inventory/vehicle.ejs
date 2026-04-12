@@ -23,7 +23,7 @@
         <h3>Add Your own Review</h3>
 
         <% if (errors) { %>
-            <ul class="notice">
+            <ul class="notices">
                 <% errors.array().forEach(error => { %>
                     <li><%= error.msg %></li>
                 <% }) %>
@@ -35,7 +35,7 @@
                 <input type="text" id="reviewName" value="<%= screen_name || '' %>" disabled>
 
                 <label for="reviewMessage">Review:</label>
-                <textarea id="reviewMessage" minlength="5" name="review_text" required placeholder="Write your review min 5 characters"></textarea>
+                <textarea id="reviewMessage" minlength="10" name="review_text" required placeholder="Write your review min 5 characters"></textarea>
                 
                 <input type="hidden" name="inv_id" value="<%= inv_id %>">
 
