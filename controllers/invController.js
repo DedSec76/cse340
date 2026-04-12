@@ -51,6 +51,7 @@ invCont.buildByInvId = async function (req, res, next) {
         
         reviews.forEach(r => {
             r.screen_name = utilities.buildScreenname(r)
+            r.review_date = utilities.formatDate(r.review_date)
         })
 
         const accountData = res.locals.accountData || null

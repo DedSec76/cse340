@@ -9,11 +9,7 @@
         <ul class="list_reviews">
             <%  reviews.forEach(review => { %>
                 <li><p><strong><%= review.screen_name || 'Anonymous' %>
-                       </strong> wrote on <%= new Date(review.review_date).toLocaleString('en-US', {
-                    day: '2-digit',
-                    month:'long',
-                    year: 'numeric'
-                }) %></p>
+                       </strong> wrote on <%= review.review_date %></p>
                     <hr>
                     <p class="review_text"><%= review.review_text %></p>
                 </li>
@@ -39,7 +35,7 @@
                 <input type="text" id="reviewName" value="<%= screen_name || '' %>" disabled>
 
                 <label for="reviewMessage">Review:</label>
-                <textarea id="reviewMessage" name="review_text" required placeholder="Write your review min 5 characters"></textarea>
+                <textarea id="reviewMessage" minlength="5" name="review_text" required placeholder="Write your review min 5 characters"></textarea>
                 
                 <input type="hidden" name="inv_id" value="<%= inv_id %>">
 

@@ -333,6 +333,9 @@ body {
   text-decoration: underline;
   color: var(--black-color);
 }
+.account_listReview li {
+  margin-bottom: 1rem;
+}
 
 .advice {
   width: 80%;
@@ -435,18 +438,34 @@ body {
 
 /* Styles for the messages */
 #messages {
-  padding: 0 16px;
-  margin: 0;
-  border-radius: 6px;
   font-weight: 500;
+  font-style: oblique;
   transition: all 0.3s ease;
 }
+#messages li {
+  padding: 5px 16px
+}
 /* ERROR */
-#messages .error,
-#messages .notice {
+#messages .error {
   background-color: #ffe5e5;
   color: #b30000;
   border-left: 5px solid #ff4d4d;
+}
+
+#messages .success {
+  background-color: #a1fda1;
+  color: var(--green-price);
+  border-left: 5px solid #01ac01;
+}
+
+#messages .notice {
+  background-color: #bee1fe;
+  color: #004e8d;
+  border-left: 5px solid #41aaff;
+}
+
+.notices li {
   list-style: disc;
   font-style: oblique;
+  color: red;
 }

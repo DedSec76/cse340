@@ -1,3 +1,4 @@
+const { query } = require("express-validator")
 const { Pool } = require("pg")
 require("dotenv").config()
 /* ***************
@@ -6,32 +7,21 @@ require("dotenv").config()
  * But will cause problems in production environment
  * If - else will make determination which to use
  * *************** */
-let pool
-if (process.env.NODE_ENV == "development") {
-    pool = new Pool({
-        connectionString: process.env.DATABASE_URL,
-        ssl: {
-            rejectUnauthorized: false,
-        },
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: process.env.NODE_ENV === "development"
+        ? { rejectUnauthorized: false }
+        : false
     })
 
-    // Added for troubleshooting queries
-    // during development
-    module.exports = {
-        async query(text, params) {
-            try {
-                const res = await pool.query(text, params)
-                //console.log("executed query", { text })
-                return res
-            } catch (error) {
-                console.error("error in query", { text })
-                throw error
-            }
-        },
+// Handling pool errors
+pool.on("error", (err) => {
+    console.error("Unexpected DB error:", err)
+})
+    
+module.exports = {
+    query: (text, params) => {
+        return pool.query(text, params)
     }
-} else {
-    pool = new Pool({
-        connectionString: process.env.DATABASE_URL
-    })
-    module.exports = pool
 }
+

@@ -222,10 +222,21 @@ Util.buildScreenname = (data) => {
 Util.logout = (req, res, next) => {
     if(req.cookies.jwt) {
         res.clearCookie("jwt")
-        //res.redirect("/")
         return res.redirect("/")
     } else {
         next()
+    }
+}
+
+Util.formatDate = (date) => {
+    if(date) {
+        return new Date(date).toLocaleString("en-US", {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        })
+    } else {
+        return ""
     }
 }
 

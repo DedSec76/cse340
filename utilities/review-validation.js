@@ -58,6 +58,35 @@ validate.checkAddReview = async(req, res, next) => {
     }
 }
 
+validate.checkUpdateReview = async(req, res, next) => {
+    try {
+        const nav = await utilities.getNav()
+
+        const { review_text, review_id } = req.body
+
+        const review = await revModel.getReviewById(review_id)
+        const { review_date, inv_make, inv_model, inv_year } = review
+        
+        const newDate = utilities.formatDate(review_date)
+        const errors = validationResult(req)
+
+        if (!errors.isEmpty()) {
+            return res.render("review/edit", {
+                title: `Edit ${inv_year} ${inv_make} ${inv_model} Review`,
+                nav,
+                errors,
+                newDate,
+                review_text,
+                review_id
+            })
+        }
+        next()
+    } catch(error) {
+        console.error(error)
+        next(error)
+    }
+}
+
 module.exports = validate
 
       

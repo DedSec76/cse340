@@ -12,6 +12,20 @@
         <h2>Inventory Management</h2>
         <a href="/inv/">Management Inventory</a>
     <% } %>
-<% }  else {
-    return res.redirect('/account/login')
-}%>
+
+    <h2>My Reviews</h2>
+
+    <% if(reviews.length > 0) { %>
+        <ol class="account_listReview">
+            <% reviews.forEach(r => { %>
+              <li>Reviewed the <%= r.inv_year%> <%=r.inv_make%> <%=r.inv_model%> 
+                on 
+                <%= r.review_date %>
+                 | <a href="/reviews/edit/<%= r.review_id %>">Edit</a>|<a href="/reviews/delete/<%= r.review_id %>">Delete</a>
+              </li>  
+            <% }) %>
+        </ol>
+    <% } else { %>
+        <p>You don't have any reviews yet.</p>
+ <%   }
+ } %>
